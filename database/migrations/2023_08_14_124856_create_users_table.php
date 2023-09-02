@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid("user_uuid")->primary();
-            $table->foreignUuid("pegawai_uuid");
+            $table->string("nama_lengkap",);
             $table->string('password');
+            $table->enum('role', ['superadmin', 'pemdes'])->default('pemdes');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('pegawai_uuid')->references('pegawai_uuid')->on('pegawai')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

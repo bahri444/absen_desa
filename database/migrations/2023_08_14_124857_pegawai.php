@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('pegawai', function (Blueprint $table) {
             $table->uuid('pegawai_uuid')->primary();
+            $table->foreignUuid('user_uuid')->nullable();
             $table->char('nip', 20)->default('none');
-            $table->string('nama_lengkap', 30);
-            $table->string('alamat', 50);
-            $table->string('nomor_telepon', 12);
             $table->enum('jenis_kelamin', ["Laki-Laki", "Perempuan"]);
-            $table->string('dusun');
+            $table->string('alamat', 50);
+            $table->string('dusun', 30);
+            $table->enum('jabatan', ['kades', 'sekdes', 'bendahara', 'kaur', 'kasi', 'kadus']);
+            $table->string('nomor_telepon', 12);
             $table->timestamps();
+            $table->foreign('user_uuid')->references('user_uuid')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

@@ -23,12 +23,12 @@ class UserController extends Controller
     public function Register(Request $request)
     {
         Validator::make($request->all(), [
-            'pegawai_uuid' => 'required',
+            'nama_lengkap' => 'required',
             'password' => 'required',
         ]);
         try {
             User::create([
-                'pegawai_uuid' => $request->pegawai_uuid,
+                'nama_lengkap' => $request->nama_lengkap,
                 'password' => Hash::make($request->password),
             ]);
             return response()->json(['success' => 'register berhasil'], 200);
@@ -39,10 +39,12 @@ class UserController extends Controller
     public function UpdateUserByUuid(Request $request, $uuid)
     {
         Validator::make($request->all(), [
+            'nama_lengkap' => 'required',
             'password' => 'required',
         ]);
         try {
             $data = User::find($uuid);
+            $data->nama_lengkap = $request->nama_lengkap;
             $data->password = Hash::make($request->password);
             $data->save();
             return response()->json(['success' => 'data berhasil di update'], 200);
@@ -64,10 +66,10 @@ class UserController extends Controller
     public function Login(Request $request)
     {
         Validator::make($request->all(), [
-            'user_uuid' => $request->user_uuid,
+            'nama_lengkap' => $request->nama_lengkap,
             'password' => $request->password,
         ]);
-        $data = $request->only('user_uuid', 'password');
+        $data = $request->only('nama_lengkap', 'password');
         // if () {
         //     # code...
         // }

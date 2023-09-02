@@ -21,8 +21,7 @@ class User extends Authenticatable
      */
     protected $primaryKey = 'user_uuid';
     protected $table = 'users';
-    protected $fillable = ['pegawai_uuid', 'password'];
-    // user_uuid	pegawai_uuid	name	email	email_verified_at	password	remember_token	created_at	updated_at	
+    protected $fillable = ['nama_lengkap', 'password', 'role'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -43,4 +42,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    // public function JoinToPegawaiOneToOne()
+    // {
+    //     return $this->hasOne(Pegawai::class, 'pegawai_uuid', 'pegawai_uuid');
+    // }
 }

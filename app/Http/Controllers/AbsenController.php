@@ -22,14 +22,14 @@ class AbsenController extends Controller
     public function AddAbsen(Request $request)
     {
         Validator::make($request->all(), [
-            'pegawai_uuid' => 'required',
+            'user_uuid' => 'required',
             'jarak_koordinat' => 'required',
         ]);
         try {
             $jamMasuk = Carbon::now();
             $tanggalAbsen = Carbon::now();
             Absen::create([
-                'pegawai_uuid' => $request->pegawai_uuid,
+                'user_uuid' => $request->user_uuid,
                 'tgl_absen' => $tanggalAbsen,
                 'jarak_koordinat' => $request->jarak_koordinat,
                 'jam_masuk' => $jamMasuk,

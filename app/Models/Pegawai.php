@@ -12,6 +12,6 @@ class Pegawai extends Model
     use HasUuids;
     protected $primaryKey = 'pegawai_uuid';
     protected $table = 'pegawai';
-    protected $fillable = ['pegawai_uuid',    'nip',    'nama_lengkap',    'alamat',    'nomor_telepon',    'jenis_kelamin',    'dusun',    'created_at',    'updated_at'];
+    protected $fillable = ['user_uuid',    'nip',    'jenis_kelamin',    'alamat', 'dusun', 'jabatan',   'nomor_telepon',    'created_at',    'updated_at'];
     protected $guarded = [];
 }

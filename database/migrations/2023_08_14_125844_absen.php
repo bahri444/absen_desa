@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('absen', function (Blueprint $table) {
             $table->uuid('absen_uuid')->primary();
-            $table->foreignUuid('pegawai_uuid');
+            $table->foreignUuid('user_uuid');
             $table->date('tgl_absen');
             $table->string('jarak_koordinat');
             $table->time('jam_masuk');
-            $table->time('jam_pulang');
+            $table->time('jam_pulang')->nullable();
             $table->timestamps();
-            $table->foreign('pegawai_uuid')->references('pegawai_uuid')->on('pegawai')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('user_uuid')->references('user_uuid')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
