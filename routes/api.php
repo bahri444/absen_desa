@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 // pegawai route
 Route::get('/pegawai', [PegawaiController::class, 'GetAllPegawai']);
@@ -30,17 +30,17 @@ Route::delete('/deletepegawai/{uuid}', [PegawaiController::class, 'DeletePegawai
 
 // absen route
 Route::get('/allabsen', [AbsenController::class, 'GetAllAbsen']);
-Route::get('/absenbyid/{uuid}', [AbsenController::class, 'GetAbsenByUuid']);
-Route::post('/tambahabsen', [AbsenController::class, 'AddAbsen']);
+Route::get('/absenbyuuid/{uuid}', [AbsenController::class, 'GetAbsenByUuid']);
+Route::post('/addabsen', [AbsenController::class, 'AddAbsen']);
 Route::put('/updateabsen/{uuid}', [AbsenController::class, 'UpdateAbsenByUuid']);
 Route::delete('/deleteabsen/{uuid}', [AbsenController::class, 'DeleteAbsenByUuid']);
 
 // users route
-Route::get('/users', [UserController::class, 'GetUser']);
-Route::get('/userbyid/{uuid}', [UserController::class, 'GetUserByUuid']);
+Route::get('/users', [UserController::class, 'GetAllUser']);
+Route::get('/userbyuuid/{uuid}', [UserController::class, 'GetUserByUuid']);
 Route::post('/register', [UserController::class, 'Register']);
-Route::put('/updateuser/{uuid}', [UserController::class, 'UpdateUser']);
-Route::delete('/deleteuser/{uuid}', [UserController::class, 'DeleteUser']);
+Route::put('/updateuser/{uuid}', [UserController::class, 'UpdateUserByUuid']);
+Route::delete('/deleteuser/{uuid}', [UserController::class, 'DeleteUserByUuid']);
 
 // login route
-Route::post('/login', [UserController::class, 'Register']);
+Route::post('/login', [UserController::class, 'Login']);

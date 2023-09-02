@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absen;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,18 +21,18 @@ class AbsenController extends Controller
     }
     public function AddAbsen(Request $request)
     {
-        Validator::make($request->all([
+        Validator::make($request->all(), [
             'pegawai_uuid' => 'required',
-            'tgl_absen' => 'required',
-            'jam_masuk' => 'required',
-            'jam_pulang' => 'required',
-        ]));
+            'jarak_koordinat' => 'required',
+        ]);
         try {
+            $jamMasuk = Carbon::now();
+            $tanggalAbsen = Carbon::now();
             Absen::create([
                 'pegawai_uuid' => $request->pegawai_uuid,
-                'tgl_absen' => $request->tgl_absen,
-                'jam_masuk' => $request->jam_masuk,
-                'jam_pulang' => $request->jam_pulang,
+                'tgl_absen' => $tanggalAbsen,
+                'jarak_koordinat' => $request->jarak_koordinat,
+                'jam_masuk' => $jamMasuk,
             ]);
             return response()->json(['success' => 'data berhasil di tambahkan'], 200);
         } catch (\Exception $e) {
@@ -40,18 +41,13 @@ class AbsenController extends Controller
     }
     public function UpdateAbsenByUuid(Request $request, $uuid)
     {
-        Validator::make($request->all([
-            'pegawai_uuid' => 'required',
-            'tgl_absen' => 'required',
-            'jam_masuk' => 'required',
-            'jam_pulang' => 'required',
-        ]));
+        $jamPulang = Carbon::now();
+        Validator::make($request->all(), [
+            // 'jam_pulang' => 'required',
+        ]);
         try {
             $data = Absen::find($uuid);
-            $data->pegawai_uuid = $request->pegawai_uuid;
-            $data->tgl_absen = $request->tgl_absen;
-            $data->jam_masuk = $request->jam_masuk;
-            $data->jam_pulang = $request->jam_pulang;
+            $data->jam_pulang = $jamPulang;
             $data->save();
             return response()->json(['success' => 'data berhasil di update'], 200);
         } catch (\Exception $e) {
