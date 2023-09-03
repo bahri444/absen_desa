@@ -11,7 +11,7 @@ class AbsenController extends Controller
 {
     public function GetAllAbsen()
     {
-        $data = Absen::all();
+        $data = Absen::with('JoinToUserOneToMany')->get();
         return response()->json($data);
     }
     public function GetAbsenByUuid($uuid)

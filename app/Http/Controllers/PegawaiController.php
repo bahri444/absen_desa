@@ -11,7 +11,7 @@ class PegawaiController extends Controller
 
     public function GetAllPegawai()
     {
-        $data = Pegawai::all();
+        $data = Pegawai::with('JoinToUserOneToOne')->get();
         return response()->json($data);
     }
     public function GetPegawaiByUuid($uuid)

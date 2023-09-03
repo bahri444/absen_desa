@@ -14,4 +14,8 @@ class Pegawai extends Model
     protected $table = 'pegawai';
     protected $fillable = ['user_uuid',    'nip',    'jenis_kelamin',    'alamat', 'dusun', 'jabatan',   'nomor_telepon',    'created_at',    'updated_at'];
     protected $guarded = [];
+    public function JoinToUserOneToOne()
+    {
+        return $this->hasOne(User::class, 'user_uuid', 'user_uuid');
+    }
 }
