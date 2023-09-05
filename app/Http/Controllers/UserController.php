@@ -46,6 +46,7 @@ class UserController extends Controller
             $data = User::find($uuid);
             $data->nama_lengkap = $request->nama_lengkap;
             $data->password = Hash::make($request->password);
+            $data->role = $request->role;
             $data->save();
             return response()->json(['success' => 'data berhasil di update'], 200);
         } catch (\Exception $e) {
