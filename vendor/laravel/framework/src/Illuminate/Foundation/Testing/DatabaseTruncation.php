@@ -85,26 +85,10 @@ trait DatabaseTruncation
                 fn ($tables) => $tables->intersect($this->tablesToTruncate),
                 fn ($tables) => $tables->diff($this->exceptTables($name))
             )
-            ->filter(fn ($table) => $connection->table($this->withoutTablePrefix($connection, $table))->exists())
-            ->each(fn ($table) => $connection->table($this->withoutTablePrefix($connection, $table))->truncate());
+            ->filter(fn ($table) => $connection->table($table)->exists())
+            ->each(fn ($table) => $connection->table($table)->truncate());
 
         $connection->setEventDispatcher($dispatcher);
-    }
-
-    /**
-     * Remove the table prefix from a table name, if it exists.
-     *
-     * @param  \Illuminate\Database\ConnectionInterface  $connection
-     * @param  string  $table
-     * @return string
-     */
-    protected function withoutTablePrefix(ConnectionInterface $connection, string $table)
-    {
-        $prefix = $connection->getTablePrefix();
-
-        return strpos($table, $prefix) === 0
-            ? substr($table, strlen($prefix))
-            : $table;
     }
 
     /**
@@ -127,18 +111,9 @@ trait DatabaseTruncation
     protected function exceptTables(?string $connectionName): array
     {
         if (property_exists($this, 'exceptTables')) {
-            $migrationsTable = $this->app['config']->get('database.migrations');
-
-            if (array_is_list($this->exceptTables ?? [])) {
-                return array_merge(
-                    $this->exceptTables ?? [],
-                    [$migrationsTable],
-                );
-            }
-
             return array_merge(
                 $this->exceptTables[$connectionName] ?? [],
-                [$migrationsTable],
+                [$this->app['config']->get('database.migrations')]
             );
         }
 

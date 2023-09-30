@@ -45,10 +45,6 @@ class PreventRequestsDuringMaintenance
      */
     public function handle($request, Closure $next)
     {
-        if ($this->inExceptArray($request)) {
-            return $next($request);
-        }
-
         if ($this->app->maintenanceMode()->active()) {
             $data = $this->app->maintenanceMode()->data();
 
@@ -56,7 +52,8 @@ class PreventRequestsDuringMaintenance
                 return $this->bypassResponse($data['secret']);
             }
 
-            if ($this->hasValidBypassCookie($request, $data)) {
+            if ($this->hasValidBypassCookie($request, $data) ||
+                $this->inExceptArray($request)) {
                 return $next($request);
             }
 
